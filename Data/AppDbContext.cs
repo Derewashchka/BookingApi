@@ -15,21 +15,21 @@ namespace BookingAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Сідінг початкових даних для послуг
+            // Seeding initial data for services
             var projector = new ServiceOption { Id = 1, Name = "Проєктор", Price = 500 };
             var wifi = new ServiceOption { Id = 2, Name = "Wi-Fi", Price = 300 };
             var sound = new ServiceOption { Id = 3, Name = "Звук", Price = 700 };
 
             modelBuilder.Entity<ServiceOption>().HasData(projector, wifi, sound);
 
-            // Сідінг залів
+            // Siding of halls
             var roomA = new Room { Id = 1, Name = "Зал А", Capacity = 50, BasePricePerHour = 2000 };
             var roomB = new Room { Id = 2, Name = "Зал В", Capacity = 100, BasePricePerHour = 3500 };
             var roomC = new Room { Id = 3, Name = "Зал С", Capacity = 30, BasePricePerHour = 1500 };
 
             modelBuilder.Entity<Room>().HasData(roomA, roomB, roomC);
 
-            // Зв'язування залів та послуг через тіньову таблицю
+            // Linking rooms and services through a shadow table
             modelBuilder.Entity<Room>()
                 .HasMany(r => r.AvailableServices)
                 .WithMany(s => s.Rooms)

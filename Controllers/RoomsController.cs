@@ -83,7 +83,7 @@ namespace BookingAPI.Controllers
         {
             var endTime = date.AddHours(durationHours);
 
-            // Знаходимо ID залів, які вже заброньовані на цей час
+            // Search for IDs of rooms that are already booked for this time
             var bookedRoomIds = await _context.Reservations
                 .Where(r => r.StartTime < endTime && r.StartTime.AddHours(r.DurationHours) > date)
                 .Select(r => r.RoomId)

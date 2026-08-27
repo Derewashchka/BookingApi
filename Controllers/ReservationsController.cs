@@ -31,21 +31,21 @@ namespace BookingAPI.Controllers
 
             if (room == null) return NotFound("Зал не знайдено");
 
-            // Перевірка доступності
+            // Check availability
             var endTime = dto.StartTime.AddHours(dto.DurationHours);
             var isConflict = await _context.Reservations
                 .AnyAsync(r => r.RoomId == dto.RoomId && r.StartTime < endTime && r.StartTime.AddHours(r.DurationHours) > dto.StartTime);
 
             if (isConflict) return BadRequest("Зал вже заброньовано на обраний час.");
 
-            // Розрахунок вартості
+            // Cost calculation
             var baseRentalCost = _pricingService.CalculateRentalPrice(room.BasePricePerHour, dto.StartTime, dto.DurationHours);
 
             var selectedServices = room.AvailableServices
                 .Where(s => dto.SelectedServiceIds.Contains(s.Id))
                 .ToList();
 
-            var servicesCost = selectedServices.Sum(s => s.Price); // Послуги оплачуються одноразово (або можна додати множник на години)
+            var servicesCost = selectedServices.Sum(s => s.Price);
 
             var reservation = new Reservation
             {
