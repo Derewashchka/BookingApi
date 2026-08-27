@@ -22,7 +22,7 @@ RESTful API для управління бронюваннями та оренд
 ## Запуск проєкту
 1. Склонуйте репозиторій:
 ```
-git clone [https://github.com/Derewashchka/BookingAPI.git](https://github.com/Derewashchka/BookingAPI.git)
+git clone https://github.com/Derewashchka/BookingAPI.git
 ```
 
 Перейдіть у директорію проєкту:
